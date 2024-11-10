@@ -1,19 +1,17 @@
 module RegFile(
-  input      Clk,	 // clock
-             Wen,    // write enable
-  input[1:0] Ra,     // read address pointer A
-             Rb,     //                      B
-			 Wd,	 // write address pointer
-  input[7:0] Wdat,   // write data in
-  output[7:0]RdatA,	 // read data out A
-             RdatB); // read data out B
+  input[7:0] dat_in,
+  input clk,
+  input wr_en,           
+  input[pw:0] wr_addr, rd_addrA, rd_addrB,
+  output logic[7:0] datA_out, datB_out);
 
-  logic[7:0] Core[4]; // reg file itself (4*8 array)
+  logic[7:0] core[8];
 
-  always_ff @(posedge Clk)
-    if(Wen) Core[Wd] <= Wdat;
+  assign datA_out = core[rd_addrA];
+  assign datB_out = core[rd_addrB];
 
-  assign RdatA = Core[Ra];
-  assign RdatB = Core[Rb];
+  always_ff @(posedge clk)
+    if(wr_en)				   
+      core[wr_addr] <= dat_in; 
 
 endmodule
