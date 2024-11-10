@@ -37,7 +37,9 @@ Ctrl C1(
   .WenR,
   .WenD,
   .Ldr,
-  .Str);
+  .Str, 
+  .Done
+);
 
 RegFile RF1(
   .Clk,
