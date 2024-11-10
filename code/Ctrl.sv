@@ -1,8 +1,8 @@
 module Ctrl(
   input        [8:0] mach_code,
-  output logic [1:0] Aluop,
-                     Jptr,
+  output logic [2:0] Aluop,
   output logic [1:0] Ra,
+                     Jptr,
 			         Rb,
 			         Wd,
   output logic       WenR,
@@ -12,7 +12,7 @@ module Ctrl(
 );
 
   always_comb begin
-	Aluop = mach_code[1:0];		// ALU
+	Aluop = {1'b0, mach_code[1:0]};// ALU
 	Jptr  = mach_code[3:2];		// jump pointer
 	Ra	  = mach_code[5:4];		// reg file addr A
 	Rb    = 2'b0;		    
