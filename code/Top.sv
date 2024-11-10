@@ -5,11 +5,11 @@ module Top(
 
   wire[5:0] Jump,
 	        PC;
-  wire[1:0] Aluop,
-            Ra,
-			Rb,
-			Wd,
-			Jptr;
+  wire[1:0] Ra,
+				Rb,
+				Wd,
+				Jptr;
+  wire[2:0] Aluop;
   wire[8:0] mach_code;
   wire[7:0] DatA,	     // ALU data in
             DatB,
