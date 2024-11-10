@@ -8,7 +8,8 @@ module Ctrl(
   output logic  WenR,
 					 WenD,
 					 Ldr,
-					 Str
+					 Str, 
+					 Done
 );
 
 //  always_comb begin
@@ -28,11 +29,18 @@ module Ctrl(
 	// Rd    = mach_code[0];   // destination reg
 	
 	// B type instructions
-	Jptr  = mach_code[3:2]; // jump pointer
+	Jptr  = mach_code[5:0];    // jump pointer
+	
 	WenR  = mach_code[6];		// reg file write enable
 	WenD  = !mach_code[6];		// data mem write enable
-	Ldr   =	mach_code[7];		// load
-   Str	  = !mach_code[6];		// store
+	Ldr   = mach_code[7];		// load
+	Str = 1'b0;
+	Done = 1'b0;
+	
+	case(mach_code)
+		9'b011111111: Done = 1'b1;
+		9'b110??????: Str = 1'b1;
+	endcase
 //    case(mach_code)
 
 //	endcase
