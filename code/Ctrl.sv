@@ -7,39 +7,40 @@ module Ctrl(
 			            Wd,
   output logic  WenR,
 					 WenD,
-					 Ldr,
-					 Str, 
+					 MemToReg,
+					 Jen, 
 					 Done
 );
 
-//  always_comb begin
-//	Aluop = {1'b0, mach_code[1:0]};// ALU
-//	Jptr  = mach_code[3:2];		// jump pointer
-//	Ra	  = mach_code[5:4];		// reg file addr A
-//	Rb    = 2'b0;		      
-//	Wd    = mach_code[5:4];
-//	WenR  = mach_code[6];		// reg file write enable
-//	WenD  = !mach_code[6];		// data mem write enable
-//	Ldr   =	mach_code[7];		// load
   always_comb begin
 	// R type instructions
-	Aluop = mach_code[7:5]; // ALU
-	Ra	   = mach_code[4:3];	// operand reg A
-	Rb    = mach_code[2:1]; // operand reg B
-	// Rd    = mach_code[0];   // destination reg
+	Aluop = mach_code[7:5];          // ALU
+	Ra	   = mach_code[4:3];	         // operand reg A
+	Rb    = mach_code[2:1];          // operand reg B
+	Wd    = 3'b100 + mach_code[0];   // destination reg
 	
 	// B type instructions
 	Jptr  = mach_code[5:0];    // jump pointer
 	
-	WenR  = mach_code[6];		// reg file write enable
-	WenD  = !mach_code[6];		// data mem write enable
-	Ldr   = mach_code[7];		// load
-	Str = 1'b0;
+	WenR  = 1'b1;   // reg file write enable
+	MemToReg = 1'b0; 
+	WenD = 1'b0; // data mem write enable
+	Jen = 1'b0; // jump enable
 	Done = 1'b0;
 	
 	case(mach_code)
-		9'b011111111: Done = 1'b1;
-		9'b110??????: Str = 1'b1;
+		9'b011111111: Done = 1'b1; // Done
+		9'b101??????: begin // Store
+		  WenD = 1'b1;
+		end
+		9'b110??????: begin // Load
+		MemToReg = 1'b1; // write to register from data_mem
+		WenR = 1'b0; // Write reg disabled for load
+		end
+		9'b100??????: begin // branch
+			WenR = 1'b0; // Write reg disabled for branch
+			Jen = 1'b1;
+		end
 	endcase
 //    case(mach_code)
 
