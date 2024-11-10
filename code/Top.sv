@@ -6,8 +6,8 @@ wire[5:0] Jump, PC;
 wire[2:0] Ra, Rb, Wd;
 wire[2:0] Aluop;
 wire[8:0] mach_code;
-wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, WdatD, Rdat, Jptr,Addr;	
-wire JEn, Par, SCo, Zero, WenR, WenD, Ldr, Str;
+wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, WdatD, Rdat, Jptr ,Addr;	
+wire Jen, Par, SCo, Zero, WenR, WenD, Ldr, Str;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
@@ -65,13 +65,14 @@ DatMem DM1(
   .Clk,
   .wr_en (WenD),
   .addr (Addr),
-  .out (Rdat);
+  .out (Rdat)
+);
 
 mux2x1 M1(
     .input0(Rdat),
     .input1(Rslt),
     .sel(Str),
     .out(WdatR)
-)
+);
 
 endmodule
