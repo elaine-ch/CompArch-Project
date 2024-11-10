@@ -7,7 +7,7 @@ wire[2:0] Ra, Rb, Wd;
 wire[2:0] Aluop;
 wire[8:0] mach_code;
 wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, WdatD, Rdat, Jptr ,Addr;	
-wire Jen, Par, SCo, Zero, WenR, WenD, Ldr, Str;
+wire Jen, Par, SCo, Zero, WenR, WenD, MemToReg;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
@@ -36,8 +36,8 @@ Ctrl C1(
   .Wd,
   .WenR,
   .WenD,
-  .Ldr,
-  .Str, 
+  .MemToReg, 
+  .Jen, 
   .Done
 );
 
@@ -72,7 +72,7 @@ DatMem DM1(
 mux2x1 M1(
     .input0(Rdat),
     .input1(Rslt),
-    .sel(Str),
+    .sel(MemToReg),
     .out(WdatR)
 );
 
