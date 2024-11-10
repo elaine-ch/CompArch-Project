@@ -8,10 +8,10 @@ module DatMem (
 
   logic[7:0] core[256];
 
+  assign dat_out = core[addr];
+
   always_ff @(posedge Clk)
     if(wr_en)
       core[addr] <= input; 
-    if(rd_en)
-      output <= core[addr];
 
 endmodule
