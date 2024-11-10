@@ -1,17 +1,17 @@
 module DatMem (
-  input[7:0] input,
+  input[7:0] in,
   input Clk,
   input wr_en,
-  input rd_en
+  input rd_en,
   input[7:0] addr,
-  output logic[7:0] output);
+  output logic[7:0] out);
 
   logic[7:0] core[256];
 
-  assign dat_out = core[addr];
+  assign out = core[addr];
 
   always_ff @(posedge Clk)
     if(wr_en)
-      core[addr] <= input; 
+      core[addr] <= in; 
 
 endmodule
