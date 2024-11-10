@@ -1,33 +1,13 @@
 module Top(
-  input        Clk,
-		       Reset,
+  input Clk, Reset,
   output logic Done);
 
-  wire[5:0] Jump,
-	        PC;
-  wire[1:0] Ra,
-				Rb,
-				Wd,
-				Jptr;
-  wire[2:0] Aluop;
-  wire[8:0] mach_code;
-  wire[7:0] DatA,	     // ALU data in
-            DatB,
-			Rslt,		 // ALU data out
-			RdatA,		 // RF data out
-			RdatB,
-			WdatR,		 // RF data in
-			WdatD,		 // DM data in
-			Rdat,		 // DM data out
-			Addr;		 // DM address
-  wire      Jen,		 // PC jump enable
-            Par,         // ALU parity flag
-			SCo,         // ALU shift/carry out
-            Zero,        // ALU zero flag
-			WenR,		 // RF write enable
-			WenD,		 // DM write enable
-			Ldr,		 // LOAD
-			Str;		 // STORE
+wire[5:0] Jump, PC;
+wire[2:0] Ra, Rb, Wd;
+wire[2:0] Aluop;
+wire[8:0] mach_code;
+wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, WdatD, Rdat, Jptr,Addr;	
+wire JEn, Par, SCo, Zero, WenR, WenD, Ldr, Str;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
@@ -80,7 +60,7 @@ ALU A1(
   .Par,
   .SCo);
 
-DMem DM1(
+DatMem DM1(
   .Clk,
   .Wen (WenD),
   .WDat(WdatD),
