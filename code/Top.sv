@@ -61,11 +61,12 @@ ALU A1(
   .SCo);
 
 DatMem DM1(
+  .input (WdatD),
   .Clk,
-  .Wen (WenD),
-  .WDat(WdatD),
-  .Addr,
-  .Rdat);
+  .wr_en (WenD),
+  .rd_en (!WenD),
+  .addr (Addr),
+  .output (Rdat);
 
 
 endmodule
