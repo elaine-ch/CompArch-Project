@@ -1,6 +1,6 @@
 module DatMem (
   input[7:0] input,
-  input clk,
+  input Clk,
   input wr_en,
   input rd_en
   input[7:0] addr,
@@ -8,7 +8,7 @@ module DatMem (
 
   logic[7:0] core[256];
 
-  always_ff @(posedge clk)
+  always_ff @(posedge Clk)
     if(wr_en)
       core[addr] <= input; 
     if(rd_en)
