@@ -2,7 +2,7 @@ module RegFile(
   input[7:0] dat_in,
   input clk,
   input wr_en,           
-  input[pw:0] wr_addr, rd_addrA, rd_addrB,
+  input[2:0] wr_addr, rd_addrA, rd_addrB,
   output logic[7:0] datA_out, datB_out);
 
   logic[7:0] core[8];
