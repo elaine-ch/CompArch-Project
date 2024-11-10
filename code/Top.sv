@@ -11,7 +11,6 @@ wire Jen, Par, SCo, Zero, WenR, WenD, Ldr, Str;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
-assign  WdatR = Rslt; 
 
 JLUT JL1(
   .Jptr,
