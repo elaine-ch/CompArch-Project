@@ -1,0 +1,17 @@
+module dat_mem (
+  input[7:0] input,
+  input clk,
+  input wr_en,
+  input rd_en
+  input[7:0] addr,
+  output logic[7:0] output);
+
+  logic[7:0] core[256];
+
+  always_ff @(posedge clk)
+    if(wr_en)
+      core[addr] <= input; 
+    if(rd_en)
+      output <= core[addr];
+
+endmodule
