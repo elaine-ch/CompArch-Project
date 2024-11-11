@@ -6,8 +6,8 @@ wire[5:0] Jump, PC;
 wire[2:0] Ra, Rb, Wd;
 wire[2:0] Aluop;
 wire[8:0] mach_code;
-wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, WdatD, Rdat, Jptr ,Addr;	
-wire Jen, Par, SCo, Zero, WenR, WenD, MemToReg;
+wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, Rdat, Jptr;	
+wire Jen, Par, SCo, Zero, WenR, WenD, RenD, MemToReg;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
@@ -36,6 +36,7 @@ Ctrl C1(
   .Wd,
   .WenR,
   .WenD,
+  .RenD, 
   .MemToReg, 
   .Jen, 
   .Done
@@ -62,13 +63,15 @@ ALU A1(
   .SCo);
 
 DatMem DM1(
-  .in (WdatD),
+  .in (RdatB),
   .Clk,
   .wr_en (WenD),
-  .addr (Addr),
+  .RenD, 
+  .addr (RdatA),
   .out (Rdat)
 );
 
+// load data_mem to reg
 mux2x1 M1(
     .input0(Rdat),
     .input1(Rslt),
