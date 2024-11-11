@@ -7,6 +7,7 @@ module Ctrl(
 			            Wd,
   output logic  WenR,
 					 WenD,
+					 RenD, 
 					 MemToReg,
 					 Jen, 
 					 Done
@@ -17,7 +18,7 @@ module Ctrl(
 	Aluop = mach_code[7:5];          // ALU
 	Ra	   = mach_code[4:3];	         // operand reg A
 	Rb    = mach_code[2:1];          // operand reg B
-	Wd    = 3'b100 + mach_code[0];   // destination reg
+	Wd    = 3'b100 + mach_code[0];   // destination reg for R instructions
 	
 	// B type instructions
 	Jptr  = mach_code[5:0];    // jump pointer
@@ -25,26 +26,34 @@ module Ctrl(
 	WenR  = 1'b1;   // reg file write enable
 	MemToReg = 1'b0; 
 	WenD = 1'b0; // data mem write enable
+	RenD = 1'b0; // read from data_mem
 	Jen = 1'b0; // jump enable
 	Done = 1'b0;
 	
 	case(mach_code)
 		9'b011111111: Done = 1'b1; // Done
-		9'b101??????: begin // Store
-		  WenD = 1'b1;
-		end
-		9'b110??????: begin // Load
-		MemToReg = 1'b1; // write to register from data_mem
-		WenR = 1'b0; // Write reg disabled for load
-		end
 		9'b100??????: begin // branch
 			WenR = 1'b0; // Write reg disabled for branch
 			Jen = 1'b1;
 		end
+		9'b110??????: begin // Load
+		  MemToReg = 1'b1; // write to register from data_mem
+		  RenD = 1'b1;
+		  Wd = mach_code[5:3];
+		  Ra = 3'b110; // read addr from reg 6
+		end
+		9'b101??????: begin // Store
+		  WenD = 1'b1;
+		  WenR = 1'b0; // Write reg disabled for store
+		  Ra = 3'b111; // read addr from reg 7
+		  Rb = mach_code[5:3];
+		end
+		9'b111??????: begin // move
+		  Ra = mach_code[5:3]; // register to be moved
+		  Wd = mach_code[2:0]; // destination register
+		end
 	endcase
-//    case(mach_code)
-
-//	endcase
+	
   end
 
 endmodule
