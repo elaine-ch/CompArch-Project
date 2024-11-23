@@ -1,0 +1,4 @@
+and r2, r3, r4  // comment after tab
+
+add r2, r3, r4 // comment after space
+// entire line comment
