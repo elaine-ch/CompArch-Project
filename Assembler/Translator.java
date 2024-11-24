@@ -1,4 +1,6 @@
 public class Translator implements Converter {
+    static int lineCount = 1;
+
     static final String[] R_TYPE_OPERANDS = new String[] {"r0", "r1", "r2", "r3"};
     static final String[] R_TYPE_DESTINATION = new String[] {"r4", "r5"};
     static final String[] REGISTERS = new String[] {"r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7"};
@@ -89,9 +91,10 @@ public class Translator implements Converter {
                     ins = line;
                 }
                 else {
-                    System.out.println("Error in translator");
+                    System.out.println("Error in translator" + " at line " + lineCount);
                 }
         }
+        lineCount++;
         return ins;
     }
 
@@ -107,7 +110,7 @@ public class Translator implements Converter {
 
         // check number of registers
         if (parts.length != regNum) {
-            System.err.println("Invalid number of registers");
+            System.err.println("Invalid number of registers" + "at line " + lineCount);
         }
 
         String reg = "";
@@ -127,13 +130,13 @@ public class Translator implements Converter {
                 return i;
             }
         }
-        System.err.println("Assigned invalid register");
+        System.err.println("Assigned invalid register" + " at line " + lineCount);
         return -1;
     }
 
     private String toBinary(int val, int size) {
         if (size < 0) {
-            System.err.println("Negative number");
+            System.err.println("Negative number" + " at line " + lineCount);
             return null;
         }
 
