@@ -1,4 +1,7 @@
 public class Translator implements Converter {
+    static final String[] R_TYPE_OPERANDS = new String[] {"r0", "r1", "r2", "r3"};
+    static final String[] R_TYPE_DESTINATION = new String[] {"r4", "r5"};
+
     public String process(String line) {
         if (line.length() < 3) {
             return "";
@@ -9,62 +12,147 @@ public class Translator implements Converter {
             case "and": 
                 ins += "0"; // R type
                 ins += "000"; // opcode
-                ins += getOperands();
+                ins += getRegisters(line.substring(4), 3);
                 break;
             case "add": 
                 ins += "0"; // R type
                 ins += "001"; // opcode
+                ins += getRegisters(line.substring(4), 3);
                 break;
             case "sub": 
                 ins += "0"; // R type
                 ins += "010"; // opcode
+                ins += getRegisters(line.substring(4), 3);
                 break;
             case "orr": 
                 ins += "0"; // R type
                 ins += "011"; // opcode
+                ins += getRegisters(line.substring(4), 3);
                 break;
             case "lst": 
                 ins += "0"; // R type
                 ins += "100"; // opcode
+                ins += getRegisters(line.substring(4), 2);
+                ins += "1";
                 break;
-            case "rst": 
+                case "rst": 
                 ins += "0"; // R type
                 ins += "101"; // opcode
+                ins += getRegisters(line.substring(4), 2);
+                ins += "1";
                 break;
-            case "cmp": 
+                case "cmp": 
                 ins += "0"; // R type
                 ins += "110"; // opcode
+                ins += getRegisters(line.substring(4), 2);
+                ins += "1";
                 break;
             case "don": 
                 ins += "1"; // B type
                 ins += "111"; // opcode
+                ins += "11111"; // padding
                 break;
             case "beq": 
-                ins += "1"; // B type
-                ins += "00"; // opcode
+                ins = line.trim();
                 break;
             case "ldr": 
                 ins += "1"; // B type
                 ins += "10"; // opcode
+                ins += getRegisters(line.substring(4), 1);
+                // TODO
                 break;
             case "ldc": 
                 ins += "1"; // B type
                 ins += "10"; // opcode
+                // TODO
                 break;
             case "str": 
                 ins += "1"; // B type
                 ins += "01"; // opcode
+                ins += getRegisters(line.substring(4), 1);
                 break;
             case "mov": 
                 ins += "1"; // B type
                 ins += "11"; // opcode
+                ins += getRegisters(line.substring(4), 2);
                 break;
             default:
+                line = line.trim();
+                if (line.charAt(line.length() - 1) == ':') {    // labels
+                    ins = line;
+                }
+                else {
+                    System.out.println("Error in translator");
+                }
         }
         return ins;
     }
 
-    private String getOperands() {
-        return "";
+    /**
+     * Outputs an array of int corresponding to the registers' number
+     */
+    private String getRegisters(String line, int regNum) {
+        // remove space/tabs, to lower case
+        line = line.replace(" ", "");
+        line = line.toLowerCase().trim();
+
+        String[] parts = line.split(",");
+
+        // check number of registers
+        if (parts.length != regNum) {
+            System.err.println("Invalid number of registers");
+        }
+
+        String reg = "";
+        reg += toBinary(assignRegister(parts[0], R_TYPE_OPERANDS), 2);
+        if (regNum >= 2) {
+            reg += toBinary(assignRegister(parts[1], R_TYPE_OPERANDS), 2);
+        }
+        if (regNum >= 3) {
+            reg += toBinary(assignRegister(parts[2], R_TYPE_DESTINATION), 1);
+        }
+        return reg;
+    }
+
+    private int assignRegister(String reg, String[] registers) {
+        for (int i = 0; i < registers.length; i++) {
+            if (registers[i].equals(reg)) {
+                return i;
+            }
+        }
+        System.err.println("Assigned invalid register");
+        return -1;
+    }
+
+    private String toBinary(int val, int size) {
+        if (size < 0) {
+            System.err.println("Negative number");
+            return null;
+        }
+
+        String result = "";
+        int powerOfTwo;
+
+        while (size-- > 0) {
+            powerOfTwo = (int) Math.pow(2, size);
+            if (val >= powerOfTwo) {
+                result += "1";
+                val -= powerOfTwo;
+            } 
+            else {
+                result += "0";
+            }
+        }
+
+        return result;
+    }
+
+    private boolean isValidBits(String bits) {
+        for (int i = 0; i < bits.length(); i++) {
+            if (bits.charAt(i) != '0' || bits.charAt(i) != '1') {
+                return false;
+            }
+        }
+        return true;
     }
 }
