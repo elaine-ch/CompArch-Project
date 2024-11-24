@@ -153,13 +153,4 @@ public class Translator implements Converter {
 
         return result;
     }
-
-    private boolean isValidBits(String bits) {
-        for (int i = 0; i < bits.length(); i++) {
-            if (bits.charAt(i) != '0' || bits.charAt(i) != '1') {
-                return false;
-            }
-        }
-        return true;
-    }
 }
