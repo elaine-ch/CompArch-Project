@@ -1,6 +1,7 @@
 public class Translator implements Converter {
     static final String[] R_TYPE_OPERANDS = new String[] {"r0", "r1", "r2", "r3"};
     static final String[] R_TYPE_DESTINATION = new String[] {"r4", "r5"};
+    static final String[] REGISTERS = new String[] {"r0", "r1", "r2", "r3", "r4", "r5", "r6", "r7"};
 
     public String process(String line) {
         if (line.length() < 3) {
@@ -58,23 +59,29 @@ public class Translator implements Converter {
             case "ldr": 
                 ins += "1"; // B type
                 ins += "10"; // opcode
-                ins += getRegisters(line.substring(4), 1);
-                // TODO
+                ins += toBinary(assignRegister(line.substring(4), REGISTERS), 3);
+                ins += "11";    // padding
+                ins += "0";     // signifier
                 break;
             case "ldc": 
                 ins += "1"; // B type
                 ins += "10"; // opcode
-                // TODO
+                ins += line.substring(4);   // constant
+                ins += "1";   // signifier
                 break;
             case "str": 
                 ins += "1"; // B type
                 ins += "01"; // opcode
-                ins += getRegisters(line.substring(4), 1);
+                ins += toBinary(assignRegister(line.substring(4), REGISTERS), 3);
+                ins += "111";    // padding
                 break;
-            case "mov": 
+                case "mov": 
                 ins += "1"; // B type
                 ins += "11"; // opcode
-                ins += getRegisters(line.substring(4), 2);
+                line = line.substring(4).replace(" ", "").toLowerCase();
+                String[] parts = line.split(",");
+                ins += toBinary(assignRegister(parts[0].trim(), REGISTERS), 3);
+                ins += toBinary(assignRegister(parts[1].trim(), REGISTERS), 3);
                 break;
             default:
                 line = line.trim();
