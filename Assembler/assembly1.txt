@@ -1,4 +1,16 @@
-and r2, r3, r4  // comment after tab
+and r1, r3, r4  // comment after tab
+add r1, r3, r4 // comment after space
+SUB R1, R3, R4
+ORR r1, r3, r5
+lst R0, R1
+rst r0, r1
 
-add r2, r3, r4 // comment after space
 // entire line comment
+Label:
+cmp r0, r2
+BEQ Label
+ldr R4
+LDC 00101
+STR r4
+mov R2, R3
+don
