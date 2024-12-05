@@ -104,6 +104,7 @@ task test_alu_func;
       end//CMP
   endcase
   #1;
+  $display("Expected: %b\n %b", expected, OUT);
   if(expected == OUT) begin
     $display("%t YAY!! inputs = %h %h, opcode = %b, Zero %b",$time, INPUTA,INPUTB,op, Zero);
   end else begin
