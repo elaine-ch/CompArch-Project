@@ -9,8 +9,7 @@ timeunit 1ns/1ps;
 bit Reset;
 bit Start;
 bit Clk;
-bit BranchAbsEn;
-bit BranchRelEn;
+bit BranchEn;
 bit ALU_flag;
 bit [9:0] TargetOrOffset;
 logic [9:0] NextInstructionIndex;
@@ -18,13 +17,10 @@ logic [9:0] NextInstructionIndex;
 // Instatiate and connect the Unit Under Test
 ProgCtr uut (
   .Reset(Reset),
-  .Start(Start),
   .Clk(Clk),
-  .BranchAbsEn(BranchAbsEn),
-  .BranchRelEn(BranchRelEn),
-  .ALU_flag(ALU_flag),
-  .Target(TargetOrOffset),
-  .ProgCtr(NextInstructionIndex)
+  .Jen(BranchEn),
+  .Jump(TargetOrOffset),
+  .PC(NextInstructionIndex)
 );
 
 integer ClockCounter = 0;
