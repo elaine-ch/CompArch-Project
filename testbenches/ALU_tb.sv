@@ -22,6 +22,7 @@ logic [ 2:0] op;      // ALU opcode, part of microcode
 wire[ 7:0] OUT;
 wire Zero;
 wire Par;
+wire SCo;
 
 // Define a helper wire for comparison
 logic [ 7:0] expected;
@@ -32,8 +33,9 @@ ALU uut(
   .DatB(INPUTB),
   .ALUop(op),
   .Rslt(OUT),
-  .Zero(Zero)
-  .Par(Par)
+  .Zero(Zero),
+  .Par(Par),
+  .SCo(SCo)
 );
 
 
@@ -54,11 +56,11 @@ end
 
 task test_alu_func;
   case (op)
-    0: expected = INPUTA + INPUTB;      // ADD
-    1: expected = {INPUTA[6:0], SC_IN}; // LSH
     2: expected = INPUTA & INPUTB;      // AND
-    3: expected = INPUTA | INPUTB;      // OR
+    0: expected = INPUTA + INPUTB;      // ADD
     4: expected = INPUTA - INPUTB;      // SUB
+    3: expected = INPUTA | INPUTB;      // OR
+    1: expected = {INPUTA[6:0], SC_IN}; // LSH
     5: expected = {1'b0, INPUTA[7:1]};  // RSH
     6: begin
         expected[0] = (INPUTA != INPUTB) ? 1 : 0;
