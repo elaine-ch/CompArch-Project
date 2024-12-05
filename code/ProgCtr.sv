@@ -2,8 +2,8 @@ module ProgCtr(
   input             Clk,
                     Reset,
 					Jen,
-  input       [5:0] Jump,
-  output logic[5:0] PC);
+  input       [7:0] Jump,
+  output logic[7:0] PC);
 
   always_ff @(posedge Clk)
     if(Reset) PC <= 'b0;

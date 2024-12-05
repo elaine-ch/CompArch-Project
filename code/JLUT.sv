@@ -1,8 +1,8 @@
 module JLUT(
   input[7:0] Jptr,
-  output logic[5:0] Jump);
+  output logic[7:0] Jump);
 
-logic[7:0] Core[64];
+logic[7:0] Core[256];
 
 initial 
 	$readmemb("jlut.txt",Core);

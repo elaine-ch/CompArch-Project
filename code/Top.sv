@@ -2,7 +2,7 @@ module Top(
   input Clk, Reset,
   output logic Done);
 
-wire[5:0] Jump, PC;
+wire[7:0] Jump, PC;
 wire[2:0] Ra, Rb, Wd;
 wire[2:0] Aluop;
 wire[8:0] mach_code;
