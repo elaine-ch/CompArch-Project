@@ -31,7 +31,7 @@ logic [ 7:0] expected;
 ALU uut(
   .DatA(INPUTA),
   .DatB(INPUTB),
-  .ALUop(op),
+  .Aluop(op),
   .Rslt(OUT),
   .Zero(Zero),
   .Par(Par),
@@ -50,6 +50,42 @@ initial begin
   INPUTA = 4;
   INPUTB = 1;
   op= 'b100; // AND
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 4;
+  INPUTB = 1;
+  op= 'b011; // SUB
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 4;
+  INPUTB = 1;
+  op= 'b101; // OR
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 3;
+  INPUTB = 12;
+  op= 'b1010000; // LSH
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 2;
+  INPUTB = 8;
+  op= 'b10; // RSH
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 4;
+  INPUTB = 1;
+  op= 'b11; // CMP
+  test_alu_func; // void function call
+  #5;
+
+  INPUTA = 4;
+  INPUTB = 4;
+  op= 'b00; // CMP
   test_alu_func; // void function call
   #5;
 end
