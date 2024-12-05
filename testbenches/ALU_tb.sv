@@ -56,12 +56,12 @@ end
 
 task test_alu_func;
   case (op)
-    2: expected = INPUTA & INPUTB;      // AND
-    0: expected = INPUTA + INPUTB;      // ADD
-    4: expected = INPUTA - INPUTB;      // SUB
+    0: expected = INPUTA & INPUTB;      // AND
+    1: expected = INPUTA + INPUTB;      // ADD
+    2: expected = INPUTA - INPUTB;      // SUB
     3: expected = INPUTA | INPUTB;      // OR
-    1: expected = {INPUTA[6:0], SC_IN}; // LSH
-    5: expected = {1'b0, INPUTA[7:1]};  // RSH
+    4: {Sco, expected} = INPUTB << INPUTA; // LSH
+    5: {expected, Sco} = INPUTB >> INPUTA;  // RSH
     6: begin
         expected[0] = (INPUTA != INPUTB) ? 1 : 0;
 				expected[1] = (INPUTA > INPUTB) ? 1 : 0;
