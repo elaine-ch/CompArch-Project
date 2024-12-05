@@ -17,8 +17,8 @@ module Ctrl(
 	// R type instructions
 	Aluop = mach_code[7:5];          // ALU
 	Ra	   = mach_code[4:3];	         // operand reg A
-	Rb    = mach_code[2:1];          // operand reg B
-	Wd    = 3'b100 + mach_code[0];   // destination reg for R instructions
+	Rb    = mach_code[2:0];          // operand reg B
+	Wd    = mach_code[2:0];   			// destination reg for R instructions
 	
 	// B type instructions
 	Jptr  = mach_code[5:0];    // jump pointer
@@ -31,7 +31,10 @@ module Ctrl(
 	Done = 1'b0;
 	
 	case(mach_code)
-		9'b011111111: Done = 1'b1; // Done
+		9'b011111111: begin
+			Done = 1'b1; // Done
+			WenR = 1'b0; // disable reg write
+		end
 		9'b100??????: begin // branch
 			WenR = 1'b0; // Write reg disabled for branch
 			Jen = 1'b1;
