@@ -22,7 +22,7 @@ logic [ 2:0] op;      // ALU opcode, part of microcode
 wire[ 7:0] OUT;
 wire Zero;
 wire Par;
-wire SCo;
+logic SCo;
 
 // Define a helper wire for comparison
 logic [ 7:0] expected;
@@ -60,8 +60,8 @@ task test_alu_func;
     1: expected = INPUTA + INPUTB;      // ADD
     2: expected = INPUTA - INPUTB;      // SUB
     3: expected = INPUTA | INPUTB;      // OR
-    4: {Sco, expected} = INPUTB << INPUTA; // LSH
-    5: {expected, Sco} = INPUTB >> INPUTA;  // RSH
+    4: {SCo, expected} = INPUTB << INPUTA; // LSH
+    5: {expected, SCo} = INPUTB >> INPUTA;  // RSH
     6: begin
         expected[0] = (INPUTA != INPUTB) ? 1 : 0;
 				expected[1] = (INPUTA > INPUTB) ? 1 : 0;
