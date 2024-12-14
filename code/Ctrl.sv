@@ -26,7 +26,7 @@ module Ctrl(
 	Jptr  = mach_code[5:0];    // jump pointer
 	
 	WenR  = 1'b1;   // reg file write enable
-	MemToReg = 1'b0; 
+	MemToReg = 1'b1; 
 	WenD = 1'b0; // data mem write enable
 	RenD = 1'b0; // read from data_mem
 	Jen = 1'b0; // jump enable
@@ -44,9 +44,10 @@ module Ctrl(
 			Jen = 1'b1;
 		end
 		9'b110?????0: begin // Load register
-		  MemToReg = 1'b1; // write to register from data_mem
+		  MemToReg = 1'b0; // write to register from data_mem
 		  RenD = 1'b1;
 		  Wd = mach_code[5:3];
+		  WenR = 1'b1;
 		  Ra = 3'b110; // read addr from reg 6
 		end
 		9'b110?????1: begin	// Load constant
@@ -61,7 +62,6 @@ module Ctrl(
 		  Rb = mach_code[5:3];
 		end
 		9'b111??????: begin // move
-		  MemToReg = 1'b1;
 		  Aluop = 111;          // ALU
 		  Ra = mach_code[5:3]; // register to be moved
 		  Wd = mach_code[2:0]; // destination register

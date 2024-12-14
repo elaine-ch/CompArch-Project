@@ -31,8 +31,6 @@ module simpleAdder_tb();
     #10ns reset = '0;
     #10ns wait(ack);
 
-    f0.RF1.core[6] = 10;
-
     if(f0.RF1.core[1] == 1) begin
         $display("%t success!", $time); 
     end else begin
