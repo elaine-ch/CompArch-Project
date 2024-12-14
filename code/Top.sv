@@ -5,9 +5,10 @@ module Top(
 wire[7:0] Jump, PC;
 wire[2:0] Ra, Rb, Wd;
 wire[2:0] Aluop;
+wire[4:0] LdcVal;
 wire[8:0] mach_code;
 wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, Rdat, Jptr;	
-wire Jen, Par, SCo, Zero, WenR, WenD, RenD, MemToReg;
+wire Jen, Par, SCo, Zero, WenR, WenD, RenD, MemToReg, Ldcen;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
@@ -31,6 +32,7 @@ Ctrl C1(
   .mach_code,
   .Aluop,
   .Jptr,
+  .LdcVal,
   .Ra,
   .Rb,
   .Wd,
@@ -39,6 +41,7 @@ Ctrl C1(
   .RenD, 
   .MemToReg, 
   .Jen, 
+  .Ldcen, 
   .Done
 );
 
@@ -57,10 +60,9 @@ ALU A1(
   .Aluop,
   .DatA,
   .DatB,
-  .Rslt,
-  .Zero,
-  .Par,
-  .SCo);
+  .Ldcen,
+  .LdcVal,
+  .Rslt);
 
 DatMem DM1(
   .in (RdatB),
