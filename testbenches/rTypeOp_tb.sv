@@ -70,7 +70,7 @@ module rTypeOp_tb();
     #20ns reset = '0;
     #20ns wait(ack);
 
-    if(f0.DM1.core[0] == 7) begin
+    if(f0.DM1.core[1] == 7) begin
         $display("%t success!", $time); 
     end else begin
         $display("%t fail! reg6 = %d reg0 = %d reg1 = %d reg7 = %d mem0 = %d mem1 = %d", $time, f0.RF1.core[6], f0.RF1.core[0], f0.RF1.core[1], f0.RF1.core[7], f0.DM1.core[0], f0.DM1.core[1]);

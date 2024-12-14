@@ -67,7 +67,7 @@ module Ctrl(
 		9'b101??????: begin // Store
 		  WenD = 1'b1;
 		  WenR = 1'b0; // Write reg disabled for store
-		  Ra = 3'b111; // read addr from reg 7
+		  Ra = 3'b110; // read addr from reg 7
 		  Rb = mach_code[5:3];
 		  stall = 1'b1;
 		end
