@@ -1,4 +1,4 @@
-module simpleAdder_tb();
+module beq_tb();
   bit       clk       , 
             reset = '1,
             req;
@@ -28,7 +28,7 @@ module simpleAdder_tb();
     #20ns reset = '0;
     #20ns wait(ack);
 
-    if(f0.DM1.core[1] == 1) begin
+    if(f0.RF1.core[1] == 1) begin
         $display("%t success!", $time); 
     end else begin
         $display("%t fail! reg5 = %d reg0 = %d reg1 = %d", $time, f0.RF1.core[5], f0.RF1.core[0], f0.RF1.core[1]);

@@ -42,7 +42,7 @@ module Ctrl(
 			WenR = 1'b0; // disable reg write
 		end
 		9'b0110?????: begin
-			stall = 1'b1;
+			stall = 1'b1;	//for cmp
 		end
 		9'b100??????: begin // branch
 			WenR = 1'b0; // Write reg disabled for branch
