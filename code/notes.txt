@@ -34,3 +34,14 @@ don
 000100001
 101001111
 011111111
+
+#beq test code
+#assume value 0 in reg0, value 1 in reg1
+
+mov r0, r5
+beq 0
+add r1, r1 
+add r1, r1
+don
+
+#corresponding mach code
