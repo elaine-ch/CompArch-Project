@@ -1,0 +1,27 @@
+# top level ldr testing
+# assume r[6] = 0, datmem[0] = 1
+ldr r1
+don
+
+#corresponding mach code
+110001110
+011111111
+
+# top level adder code
+# assume values 4, 3 in dat[mem] 0 and 1, with reg[6] = 0, reg[1] = 1, r[7] = 0
+# should end up with sum in dat[mem] 0
+
+ldr r0
+mov r1, r6
+ldr r1
+add r0, r1
+str r1
+don
+
+#corresponding mach code
+110000110
+111001110
+110001110
+000100001
+101001111
+011111111

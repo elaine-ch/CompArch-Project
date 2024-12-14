@@ -5,6 +5,7 @@ module ProgCtr(
   input       [7:0] Jump,
   output logic[7:0] PC);
 
+
   always_ff @(posedge Clk)
     if(Reset) PC <= 'b0;
 	else if(Jen) PC <= Jump;
