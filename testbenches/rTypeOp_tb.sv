@@ -1,4 +1,4 @@
-module simpleAdder_tb();
+module rTypeOp_tb();
   bit       clk       , 
             reset = '1,
             req;
