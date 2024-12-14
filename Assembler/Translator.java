@@ -48,7 +48,7 @@ public class Translator implements Converter {
                 ins += getRRegisters(line.substring(4));
                 break;
             case "don": 
-                ins += "1"; // B type
+                ins += "0"; // B type
                 ins += "111"; // opcode
                 ins += "11111"; // padding
                 break;

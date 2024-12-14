@@ -1,5 +1,6 @@
 module Ctrl(
   input        [8:0] mach_code,
+  output logic [4:0] LdcVal, 
   output logic [7:0] Jptr,
   output logic [2:0] Aluop,
   output logic [2:0] Ra,
@@ -10,6 +11,7 @@ module Ctrl(
 					 RenD, 
 					 MemToReg,
 					 Jen, 
+					 Ldcen,
 					 Done
 );
 
@@ -29,8 +31,10 @@ module Ctrl(
 	RenD = 1'b0; // read from data_mem
 	Jen = 1'b0; // jump enable
 	Done = 1'b0;
+	Ldcen = 1'b0;
+	LdcVal = 5'b00000;
 	
-	case(mach_code)
+	casez(mach_code)
 		9'b011111111: begin
 			Done = 1'b1; // Done
 			WenR = 1'b0; // disable reg write
@@ -39,11 +43,16 @@ module Ctrl(
 			WenR = 1'b0; // Write reg disabled for branch
 			Jen = 1'b1;
 		end
-		9'b110??????: begin // Load
+		9'b110?????0: begin // Load register
 		  MemToReg = 1'b1; // write to register from data_mem
 		  RenD = 1'b1;
 		  Wd = mach_code[5:3];
 		  Ra = 3'b110; // read addr from reg 6
+		end
+		9'b110?????1: begin	// Load constant
+		  Ldcen = 1'b1;
+		  LdcVal = mach_code[5:1];
+		  Wd = 3'b110;
 		end
 		9'b101??????: begin // Store
 		  WenD = 1'b1;
