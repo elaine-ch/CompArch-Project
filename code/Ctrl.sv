@@ -30,7 +30,7 @@ module Ctrl(
 	Jen = 1'b0; // jump enable
 	Done = 1'b0;
 	
-	case(mach_code)
+	priority casez(mach_code)
 		9'b011111111: begin
 			Done = 1'b1; // Done
 			WenR = 1'b0; // disable reg write
