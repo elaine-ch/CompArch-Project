@@ -1,0 +1,10 @@
+# top level adder code
+# assume values in dat[mem] 0 and 1, with reg[6] = 0, reg[1] = 1, r[7] = 0
+# should end up with sum in dat[mem] 0
+
+ldr r0
+mov r1, r6
+ldr r1
+add r0, r1
+str r1
+don
