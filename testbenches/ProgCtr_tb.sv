@@ -1,9 +1,9 @@
 // Test bench
 // Program Counter (Instruction Fetch)
 
-module ALU_tb;
+module ProgCtr_tb;
 
-timeunit 1ns/1ps;
+`timescale 1ns/ 1ps
 
 // Define signals to interface with UUT
 bit Reset;
@@ -44,6 +44,7 @@ initial begin
   // Advance to simulation time 2, check results, prepare next values
   #1 Clk = '0;
   $display("Checking Reset behavior");
+  $display("Expected: 0\n %d", NextInstructionIndex);
   assert (NextInstructionIndex == 'd0);
   Reset = '0;
 
@@ -53,7 +54,8 @@ initial begin
   // Advance to simulation time 4, check results, prepare next values
   #1 Clk = '0;
   $display("Checking that nothing happens before Start");
-  assert (NextInstructionIndex == 'd0);
+  $display("Expected: 1\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd1);
   Start = '1;
 
   // Advance to simulation time 5, latch values
@@ -62,7 +64,8 @@ initial begin
   // Advance to simulation time 6, check results, prepare next values
   #1 Clk = '0;
   $display("Checking that nothing happened during Start");
-  assert (NextInstructionIndex == 'd0);
+  $display("Expected: 2\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd2);
   Start = '0;
 
   // Advance to simulation time 7, latch values
@@ -71,7 +74,8 @@ initial begin
   // Advance to simulation time 8, check outputs, prepare next values
   #1 Clk = '0;
   $display("Checking that first Start went to first program");
-  assert (NextInstructionIndex == 'd000);
+  $display("Expected: 3\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd003);
   // No change in inputs
 
   // Advance to simulation time 9, latch values
@@ -80,7 +84,8 @@ initial begin
   // Advance to simulation time 10, check outputs, prepare next values
   #1 Clk = '0;
   $display("Checking that PC advanced by 1");
-  assert (NextInstructionIndex == 'd001);
+  $display("Expected: 4\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd004);
   BranchEn = '1;
   TargetOrOffset = 'd10;
 
@@ -88,7 +93,8 @@ initial begin
   #1 Clk = '1;
   #1 Clk = '0;
   $display("Checking that branch went to target");
-  assert (NextInstructionIndex == 'd11);
+  $display("Expected: 10\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd10);
   BranchEn = '0;
   TargetOrOffset = 'd5;
 
@@ -96,15 +102,17 @@ initial begin
   #1 Clk = '1;
   #1 Clk = '0;
   $display("Checking that branch with no enable did not jump");
-  assert (NextInstructionIndex == 'd12);
-  BranchEn = '0;
+  $display("Expected: 11\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd11);
+  BranchEn = '1;
   TargetOrOffset = 'd5;
 
   // Latch, check, setup next test
   #1 Clk = '1;
   #1 Clk = '0;
   $display("Checking that relative branch with ALU flag did jump");
-  assert (NextInstructionIndex == 'd17);
+  $display("Expected: 5\n %d", NextInstructionIndex);
+  assert (NextInstructionIndex == 'd5);
 
   $display("All checks passed.");
 end

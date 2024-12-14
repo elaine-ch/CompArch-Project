@@ -21,6 +21,7 @@ always_comb begin
 				Rslt[0] = (DatA != DatB) ? 1 : 0; // 1 for !=, 00 for ==
 				Rslt[1] = (DatA > DatB) ? 1 : 0;  // 1 for >, 0 for <
 			  end
+	3'b111: Rslt = DatA;					 // mov
   endcase
 end
 
