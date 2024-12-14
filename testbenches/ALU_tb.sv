@@ -105,9 +105,9 @@ task test_alu_func;
   endcase
   #1;
   if(expected == OUT) begin
-    $display("%t YAY!! inputs = %h %h, opcode = %b, Zero %b",$time, INPUTA,INPUTB,op, Zero);
+    $display("%t YAY!! inputs = %h %h, opcode = %b, Zero %b",$time, INPUTA, INPUTB,op, Zero);
   end else begin
-    $display("%t FAIL! inputs = %h %h, opcode = %b, zero %b",$time, INPUTA,INPUTB,op, Zero);
+    $display("%t FAIL! inputs = %h %h, opcode = %b, zero %b",$time, INPUTA, INPUTB,op, Zero);
   end
 endtask
 
