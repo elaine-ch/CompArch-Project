@@ -8,7 +8,7 @@ wire[2:0] Aluop;
 wire[4:0] LdcVal;
 wire[8:0] mach_code;
 wire[7:0] DatA, DatB, Rslt, RdatA, RdatB, WdatR, Rdat, Jptr;	
-wire Jen, Zero, WenR, WenD, RenD, MemToReg, Ldcen;
+wire Jen, Zero, WenR, WenD, RenD, MemToReg, Ldcen, StallCtr;
 
 assign  DatA = RdatA;
 assign  DatB = RdatB; 
@@ -23,6 +23,7 @@ ProgCtr PC1(
   .Jen,
   .Zero,
   .Jump,
+  .StallCtr,
   .PC);
 
 InstROM IR1(
@@ -43,7 +44,8 @@ Ctrl C1(
   .MemToReg, 
   .Jen, 
   .Ldcen, 
-  .Done
+  .Done, 
+  .stall(StallCtr)
 );
 
 RegFile RF1(

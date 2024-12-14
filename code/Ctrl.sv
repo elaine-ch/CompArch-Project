@@ -12,7 +12,8 @@ module Ctrl(
 					 MemToReg,
 					 Jen, 
 					 Ldcen,
-					 Done
+					 Done,
+					 stall
 );
 
   always_comb begin
@@ -33,6 +34,7 @@ module Ctrl(
 	Done = 1'b0;
 	Ldcen = 1'b0;
 	LdcVal = 5'b00000;
+	stall = 1'b0;
 	
 	casez(mach_code)
 		9'b011111111: begin
@@ -49,24 +51,28 @@ module Ctrl(
 		  Wd = mach_code[5:3];
 		  WenR = 1'b1;
 		  Ra = 3'b110; // read addr from reg 6
+		  stall = 1'b1;
 		end
 		9'b110?????1: begin	// Load constant
 		  Ldcen = 1'b1;
 		  LdcVal = mach_code[5:1];
 		  WenR = 1'b1;
 		  Wd = 3'b110;
+		  stall = 1'b1;
 		end
 		9'b101??????: begin // Store
 		  WenD = 1'b1;
 		  WenR = 1'b0; // Write reg disabled for store
 		  Ra = 3'b111; // read addr from reg 7
 		  Rb = mach_code[5:3];
+		  stall = 1'b1;
 		end
 		9'b111??????: begin // move
 		  Aluop = 111;          // ALU
 		  Ra = mach_code[5:3]; // register to be moved
 		  Wd = mach_code[2:0]; // destination register
 		  WenR = 1'b1;
+		  stall = 1'b1;
 		end
 	endcase
 	
