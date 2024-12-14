@@ -80,7 +80,8 @@ mux2x1 M1(
     .input0(Rdat),
     .input1(Rslt),
     .sel(MemToReg),
-    .out(WdatR)
+    .out(WdatR),
+    .clk(Clk)
 );
 
 endmodule

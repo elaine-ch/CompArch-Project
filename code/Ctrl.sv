@@ -53,6 +53,7 @@ module Ctrl(
 		9'b110?????1: begin	// Load constant
 		  Ldcen = 1'b1;
 		  LdcVal = mach_code[5:1];
+		  WenR = 1'b1;
 		  Wd = 3'b110;
 		end
 		9'b101??????: begin // Store
@@ -65,6 +66,7 @@ module Ctrl(
 		  Aluop = 111;          // ALU
 		  Ra = mach_code[5:3]; // register to be moved
 		  Wd = mach_code[2:0]; // destination register
+		  WenR = 1'b1;
 		end
 	endcase
 	

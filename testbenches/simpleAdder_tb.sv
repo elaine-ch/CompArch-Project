@@ -21,20 +21,36 @@ module simpleAdder_tb();
     // 110001110
     // 011111111
 
-    f0.DM1.core[0] = 1;
-    f0.RF1.core[6] = 0;
-    f0.RF1.core[1] = 0;
+    // f0.DM1.core[0] = 1;
+    // f0.RF1.core[6] = 0;
+    // f0.RF1.core[1] = 0;
 
-    reg6 = f0.RF1.core[6];
-    reg1 = f0.RF1.core[1];
+    // reg6 = f0.RF1.core[6];
+    // reg1 = f0.RF1.core[1];
+
+    // #10ns reset = '0;
+    // #10ns wait(ack);
+
+    // if(f0.RF1.core[1] == 1) begin
+    //     $display("%t success!", $time); 
+    // end else begin
+    //     $display("%t fail! reg6 = %d reg1 = %d mem0 = %d", $time, f0.RF1.core[6], f0.RF1.core[1], f0.DM1.core[0]);
+    // end
+
+    //mov test with mach_code
+    // 111001110
+    // 011111111
+
+    f0.RF1.core[1] = 3;
+    f0.RF1.core[6] = 0;
 
     #10ns reset = '0;
     #10ns wait(ack);
 
-    if(f0.RF1.core[1] == 1) begin
+    if(f0.RF1.core[6] == 3) begin
         $display("%t success!", $time); 
     end else begin
-        $display("%t fail! reg6 = %d reg1 = %d mem0 = %d", $time, f0.RF1.core[6], f0.RF1.core[1], f0.DM1.core[0]);
+        $display("%t fail! reg6 = %d reg1 = %d", $time, f0.RF1.core[6], f0.RF1.core[1]);
     end
 
     //add test with mach_code
