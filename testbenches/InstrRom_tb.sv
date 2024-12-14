@@ -1,44 +1,34 @@
 module InstrRom_tb();
-	logic[7:0] PC;
+	logic[7:0] pc;
 	logic[8:0] mach_code;
-	logic[8:0] Core[256];
-
-	logic clk;
 
 
-	InstROM InstrROM (.PC(PC), .mach_code(mach_code));
+	InstROM InstrROM (.PC(pc), .mach_code(mach_code));
 
-	always begin               // clock 
-		#1ns clk = '1;			 
-		#1ns clk = '0;
-	end
 
 	initial begin				 // test sequence
-		clk = 0;
-		PC = 0;
-		
-		$readmemb("C:\Users\elain\Documents\useless\CSE-141L-2024\code\mach_code.txt", Core);
+		pc = 0;
 
 		#10ns
-		$display("%d", Core[0]);
-		PC++;
+		$display("%b", mach_code);
+		pc++;
 		#1ns
-		$display("%d", Core[1]);
+		$display("%b", mach_code);
 
 		#10ns
-		PC++;
+		pc++;
 		#1ns
-		$display("%d", Core[2]);
+		$display("%b", mach_code);
 
 		#10ns
-		PC++;
+		pc++;
 		#1ns
-		$display("%d", Core[3]);
+		$display("%b", mach_code);
 
 		#10ns
-		PC++;
+		pc++;
 		#1ns
-		$display("%d", Core[4]);
+		$display("%b", mach_code);
 
 		#10ns
 		$stop;
