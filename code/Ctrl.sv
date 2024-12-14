@@ -52,6 +52,8 @@ module Ctrl(
 		  Rb = mach_code[5:3];
 		end
 		9'b111??????: begin // move
+		  MemToReg = 1'b1;
+		  Aluop = 111;          // ALU
 		  Ra = mach_code[5:3]; // register to be moved
 		  Wd = mach_code[2:0]; // destination register
 		end
