@@ -5,6 +5,7 @@ module RegFile(
              Rb,   //                      B
 			    Wd,	 // write address pointer
   input[7:0] Wdat, // write data in
+  output Zero, 	 // checks that R6=0
   output[7:0]RdatA,// read data out A
              RdatB);// read data out B
 				      
@@ -12,9 +13,10 @@ module RegFile(
 
   assign RdatA = core[Ra];
   assign RdatB = core[Rb];
+  assign Zero = core[5] == 0;
 
   always_ff @(posedge Clk)
     if(Wen)
-      core[Wd] <= Wdat; 
+      core[Wd] <= Wdat;
 
 endmodule
