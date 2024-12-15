@@ -10,10 +10,8 @@ module DatMem (
 
   // store
   always_ff @(posedge Clk) begin
-    if(wr_en)
-      core[addr] <= in; 
-	 if(RenD)
-	   out <= core[addr];
+    if(wr_en) core[addr] <= in; 
+    if(RenD) out <= core[addr];
 	end
 
 endmodule

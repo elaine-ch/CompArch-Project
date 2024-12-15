@@ -1,25 +1,16 @@
 module Ctrl(
-  input        [8:0] mach_code,
+  input [8:0] mach_code,
   output logic [4:0] LdcVal, 
   output logic [7:0] Jptr,
   output logic [2:0] Aluop,
-  output logic [2:0] Ra,
-			            Rb,
-			            Wd,
-  output logic  WenR,
-					 WenD,
-					 RenD, 
-					 MemToReg,
-					 Jen, 
-					 Ldcen,
-					 Done,
-					 stall
+  output logic [2:0] Ra, Rb, Wd,
+  output logic  WenR, WenD, RenD, MemToReg, Jen, Ldcen, Done, stall
 );
 
   always_comb begin
 	// R type instructions
 	Aluop = mach_code[7:5];          // ALU
-	Ra	   = mach_code[4:3];	         // operand reg A
+	Ra	  = mach_code[4:3];	         // operand reg A
 	Rb    = mach_code[2:0];          // operand reg B
 	Wd    = mach_code[2:0];   			// destination reg for R instructions
 	

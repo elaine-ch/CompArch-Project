@@ -1,11 +1,7 @@
 module ProgCtr(
-  input             Clk,
-                    Reset,
-						  Jen,
-						  Zero, 
-              StallCtr,
-  input       [7:0] Jump,
-  output logic[7:0] PC);
+  input Clk, Reset, Jen, Zero, StallCtr,
+  input [7:0] Jump,
+  output logic [7:0] PC);
 
   logic[2:0] ct = 0;
 
