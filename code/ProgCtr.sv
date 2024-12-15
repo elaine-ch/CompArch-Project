@@ -23,6 +23,8 @@ module ProgCtr(
         else      PC <= PC + 6'd1;
       end
 		
+	 end else begin
+	   PC <= 'b0;
 	 end
 	   
   end
