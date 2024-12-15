@@ -1,5 +1,6 @@
 module Ctrl(
   input [8:0] mach_code,
+  input Start,
   output logic [4:0] LdcVal, 
   output logic [7:0] Jptr,
   output logic [2:0] Aluop,
@@ -26,6 +27,8 @@ module Ctrl(
 	Ldcen = 1'b0;
 	LdcVal = 5'b00000;
 	stall = 1'b0;
+
+	if(Start) Done = 1'b0;
 	
 	casez(mach_code)
 		9'b011111111: begin

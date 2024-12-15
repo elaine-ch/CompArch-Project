@@ -1,5 +1,5 @@
 module Top(
-  input Clk, Reset,
+  input Clk, Reset, Start
   output logic Done);
 
 wire[7:0] Jump, PC;
@@ -23,6 +23,7 @@ ProgCtr PC1(
   .Jen,
   .Zero,
   .Jump,
+  .Start,
   .StallCtr,
   .PC);
 
@@ -45,6 +46,7 @@ Ctrl C1(
   .Jen, 
   .Ldcen, 
   .Done, 
+  .Start,
   .stall(StallCtr)
 );
 

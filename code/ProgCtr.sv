@@ -1,12 +1,14 @@
 module ProgCtr(
-  input Clk, Reset, Jen, Zero, StallCtr,
+  input Clk, Reset, Jen, Zero, Start, StallCtr,
   input [7:0] Jump,
   output logic [7:0] PC);
 
   logic[2:0] ct = 0;
 
   always_ff @(posedge Clk) begin
-    if(StallCtr) begin
+    if(Start)
+      //do nothing
+    else if(StallCtr) begin
       if (ct % 4 == 0) begin
         if(Reset) PC <= 'b0;
         else if(Jen & Zero) PC <= Jump;
