@@ -1,4 +1,4 @@
-module program2_tb();
+module componentExtract_tb();
   bit   clk = '0, 
         reset='1,
         req;
@@ -11,6 +11,8 @@ module program2_tb();
   real int_equiv;                // computed value of integer 
   real mant2;					 // real equiv. of mant.
   logic signed[15:0] int_out;			 // two's comp. result
+  int  score0, score1, 
+       count;
  			 
   Top f3(.Clk(clk),			 // your DUT goes here
     .Reset (reset),
@@ -87,31 +89,28 @@ module program2_tb();
   end
   task disp();
     #10ns req = '1;
-    {f3.DM1.core[5],f3.DM1.core[4]} = flt_in;	 //    same for your DUT
+    {f3.DM1.core[5],f3.DM1.core[4]} = flt_in;
     #10ns req = '0;
     sign      = flt_in[15];
-    exp       = flt_in[14:10]-15;	     // remove exponent bias      
-    mant[10]  = |flt_in[14:10];	         // restore hidden bit
-    mant[9:0] = flt_in[ 9: 0];	         // parse mantissa fraction
+    exp       = flt_in[14:10];  
+    // mant[10]  = |flt_in[14:10];	         // restore hidden bit
+    // mant[9:0] = flt_in[ 9: 0];	         // parse mantissa fraction
     mant2     = mant/1024.0;	         // equiv. floating point value of mant.
 	wait(ack);
-    if(exp>14) begin
-      if(sign) int_out = -32768;         // max neg. trap        
-      else     int_out =  32767;		 // max pos. trap
-    end
-    else begin
-	int_equiv = mant2 * 2**exp;
-	int_out   = sign? -int_equiv : int_equiv;
-	end
-    #20ns $display("%f * 2**%d = %f = %d",mant2,exp,int_equiv,int_out);
+  //   if(exp>14) begin
+  //     if(sign) int_out = -32768;         // max neg. trap        
+  //     else     int_out =  32767;		 // max pos. trap
+  //   end
+  //   else begin
+	// int_equiv = mant2 * 2**exp;
+	// int_out   = sign? -int_equiv : int_equiv;
+	// end
+    #20ns $display("inserted mant: %b exp: %b sign: %b",mant, exp, sign);
           $display("original binary = %b_%b_%b",flt_in[15],flt_in[14:10],flt_in[9:0]);
-    #20ns $display("from dum = %b = %d",{f2.dm1.mem_core[7],f2.dm1.mem_core[6]},
-        {f2.dm1.mem_core[7],f2.dm1.mem_core[6]});
-    $display("from DUT = %b = %d",{f3.DM1.core[7],f3.DM1.core[6]},
-        {f3.DM1.core[7],f3.DM1.core[6]});      
+    #20ns $display("my mant: %b exp: %b sign: %b",{f3.RF1.core[0],f3.RF1.core[1]},
+        f3.RF1.core[3],f3.RF1.core[4]);      
     count++;
-	if({f3.DM1.core[7],f3.DM1.core[6]} == {f2.dm1.mem_core[7],f2.dm1.mem_core[6]}) score0++;
-    if(int_out == {f3.DM1.core[7],f3.DM1.core[6]}) score1++;
-	$display("                ct = %d, score0 = %d, score1 =  %d",count,score0,score1);
+	if({f3.RF1.core[0],f3.RF1.core[1]} == mant && f3.RF1.core[3] == exp && f3.RF1.core[4] == sign) score0++;
+	$display("ct = %d, score = %d",count,score0);
   endtask
 endmodule
