@@ -1,17 +1,15 @@
 module beq_tb();
-  bit       clk       , 
-            reset = '1,
-            req;
-  wire      ack;			 
+  bit clk, reset = '1, req;
+  wire ck;			 
 			  
   Top f0(				 
-    .Clk  (clk),
+    .Clk (clk),
     .Reset(reset),
     .Done (ack));	         
 
   always begin               
     #5ns clk = '1;			 
-	#5ns clk = '0;
+	  #5ns clk = '0;
   end
 
   initial begin				

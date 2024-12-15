@@ -19,12 +19,7 @@ RegFile registers(
 
 initial begin
 
-// Initialize reg file values
-// edit index limit for size other than 256 elements
-  // #10ns for(int i=0; i<256; i++) begin
-  //   DUT.data.my_memory[i] = 8'h0;	     // clear data_mem
-  //   mymem[i] = 8'b0;
-  // end  
+  // Initialize reg file values
   regReadWrite_tb.registers.core[0] = 1;
   regReadWrite_tb.registers.core[1] = 31;
   regReadWrite_tb.registers.core[2] = 96;
@@ -64,16 +59,7 @@ initial begin
   end else begin
     $display("%t FAIL! read: inputs = %d, outputs = %d, expected = 10",$time, Ra, RdatA);
   end
-
-
-
-// DUT's histogram
-  // $display("DUT       histogram: ",DUT.data.my_memory[10],,
-  //   DUT.data.my_memory[11],,
-  //   DUT.data.my_memory[12],,
-  //   DUT.data.my_memory[13],,
-  //   DUT.data.my_memory[14]);
-  // $display("cycle count = %d",cycle_ct);
+ 
   #10ns $stop;			   
 end
 
@@ -82,10 +68,5 @@ always begin   // clock period = 10 Verilog time units
   #5ns  clk = 1;
   #5ns  clk = 0;
 end
-
-// clock cycle counter
-// always @(posedge CLK)
-//   if(!start && !halt)
-//     cycle_ct <= cycle_ct + 32'b1;
       
 endmodule
