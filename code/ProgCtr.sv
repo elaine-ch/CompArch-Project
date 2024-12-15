@@ -6,22 +6,25 @@ module ProgCtr(
   logic[2:0] ct = 0;
 
   always_ff @(posedge Clk) begin
-    if(Start) begin
-      //do nothing
-		end
-    else if(StallCtr) begin
-      if (ct % 4 == 0) begin
+  
+    if(!Start) begin
+	 
+	   if(StallCtr) begin
+        if (ct % 4 == 0) begin
+          if(Reset) PC <= 'b0;
+          else if(Jen & Zero) PC <= Jump;
+          else      PC <= PC + 6'd1;
+        end
+        ct = ct + '1;
+      end else begin
+        ct = 0;
         if(Reset) PC <= 'b0;
         else if(Jen & Zero) PC <= Jump;
         else      PC <= PC + 6'd1;
       end
-      ct = ct + '1;
-    end else begin
-      ct = 0;
-      if(Reset) PC <= 'b0;
-      else if(Jen & Zero) PC <= Jump;
-      else      PC <= PC + 6'd1;
-    end
+		
+	 end
+	   
   end
 
 endmodule
