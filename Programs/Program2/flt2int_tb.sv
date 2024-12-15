@@ -19,10 +19,10 @@ module flt2int_tb_noround();
     .reset (reset),
     .start (req  ),
     .done  (ack0));				 
-  flt2int f3(.clk(clk),			 // your DUT goes here
-    .reset (reset),
-    .start (req  ),
-    .done  (ack) );				 
+  Top f3(.Clk(clk),			 // your DUT goes here
+    .Reset (reset),
+    .Start (req  ),
+    .Done  (ack) );				 
   always begin
     #5ns clk = 1;
 	#5ns clk = 0;
@@ -113,14 +113,14 @@ module flt2int_tb_noround();
   task disp();
     #10ns req = '1;
     {f2.dm1.mem_core[5],f2.dm1.mem_core[4]} = flt_in;	 // inject flt_in to dat_mem
-    {f3.dm1.mem_core[5],f3.dm1.mem_core[4]} = flt_in;	 //    same for your DUT
+    {f3.DM1.core[5],f3.DM1.core[4]} = flt_in;	 //    same for your DUT
     #10ns req = '0;
     sign      = flt_in[15];
     exp       = flt_in[14:10]-15;	     // remove exponent bias      
     mant[10]  = |flt_in[14:10];	         // restore hidden bit
     mant[9:0] = flt_in[ 9: 0];	         // parse mantissa fraction
     mant2     = mant/1024.0;	         // equiv. floating point value of mant.
-	wait(ack0 || ack);
+	wait(ack);
     if(exp>14) begin
       if(sign) int_out = -32768;         // max neg. trap        
       else     int_out =  32767;		 // max pos. trap
@@ -133,11 +133,11 @@ module flt2int_tb_noround();
           $display("original binary = %b_%b_%b",flt_in[15],flt_in[14:10],flt_in[9:0]);
     #20ns $display("from dum = %b = %d",{f2.dm1.mem_core[7],f2.dm1.mem_core[6]},
         {f2.dm1.mem_core[7],f2.dm1.mem_core[6]});
-    $display("from DUT = %b = %d",{f3.dm1.mem_core[7],f3.dm1.mem_core[6]},
-        {f3.dm1.mem_core[7],f3.dm1.mem_core[6]});      
+    $display("from DUT = %b = %d",{f3.DM1.core[7],f3.DM1.core[6]},
+        {f3.DM1.core[7],f3.DM1.core[6]});      
     count++;
-	if({f3.dm1.mem_core[7],f3.dm1.mem_core[6]} == {f2.dm1.mem_core[7],f2.dm1.mem_core[6]}) score0++;
-    if(int_out == {f3.dm1.mem_core[7],f3.dm1.mem_core[6]}) score1++;
+	if({f3.DM1.core[7],f3.DM1.core[6]} == {f2.dm1.mem_core[7],f2.dm1.mem_core[6]}) score0++;
+    if(int_out == {f3.DM1.core[7],f3.DM1.core[6]}) score1++;
 	$display("                ct = %d, score0 = %d, score1 =  %d",count,score0,score1);
   endtask
 endmodule

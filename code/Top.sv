@@ -1,5 +1,5 @@
 module Top(
-  input Clk, Reset, Start
+  input Clk, Reset, Start,
   output logic Done);
 
 wire[7:0] Jump, PC;
