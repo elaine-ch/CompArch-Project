@@ -1,0 +1,7 @@
+0) magnitude: 19
+1) exp: 27
+2) exp2: 39
+3) mantissa: 49
+4) ten: 83
+5) bigger: 99
+6) end: 112
