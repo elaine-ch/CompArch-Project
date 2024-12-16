@@ -2,7 +2,7 @@
 // rounding removed -- use with no_round test bench version
 // not intended to be synthesizable -- just shows the algorithm
 // CSE141L  
-module flt2int(			     // my dummy placeholder for your design
+module flt2int_noround(			     // my dummy placeholder for your design
   input              clk, 
                      reset, 
                      start,        //	request from test bench

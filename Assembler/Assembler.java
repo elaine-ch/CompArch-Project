@@ -12,7 +12,7 @@ public class Assembler {
 
     static final String FULL_PATH = "C:/Users/elain/Documents/useless/CSE-141L-2024/Assembler/";
 
-    static final int VERSION = 1;
+    static final int VERSION = 0;
     static final String ASSEMBLY_FILE = FULL_PATH + "assembly" + VERSION + FORMAT;  // assembly1.txt
     static final String MACHINE_CODE_FILE = FULL_PATH + "machine_code" + VERSION + FORMAT;  // machine_code.txt
 
