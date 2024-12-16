@@ -3,3 +3,4 @@ modelsim.ini
 modelsim.mpf
 vsim.wlf
 work/
+.vscode/
