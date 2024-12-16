@@ -19,12 +19,23 @@ ldc 00011
 and r0, r6
 mov r6, r0
 ldc 01111
+mov r6, r7
+ldc 00001
+mov r6, r2
+lst r2, r7
+cmp r3, r7
+beq special_case
+ldc 00001
+mov r6, r2
+cmp r2, r7
+beq special_case
+ldc 01111
 sub r3, r6
 mov r6, r3
 ldc 00000
 cmp r3, r6
 beq exp_zero
-ldc 00100
+ldc 00001
 mov r6, r2
 orr r2, r0
 exp_zero:
@@ -36,28 +47,37 @@ cmp r2, r5
 beq exp_gt_ten
 ldc 01010
 mov r6, r2
-sub r2, r3
-rst r3, r1
-rst r3, r0
+sub r3, r2
+lst r2, r0
+mov r2, r7
+ldc 01000
+mov r6, r2
+sub r2, r7
+mov r7, r3
+mov r1, r7
+rst r3, r7
+mov r7, r3
+add r3, r0
+lst r2, r1
 ldc 00000
 mov r6, r5
 beq skip_exp_gt_ten
 exp_gt_ten:
 ldc 01010
-sub r3, r6
 mov r6, r2
-lst r2, r0
-lst r2, r1
+sub r2, r3
+rst r3, r1
+mov r3, r7
+ldc 01000
+mov r6, r2
+sub r2, r7
+mov r7, r2
+mov r0, r7
+lst r2, r7
+mov r7, r2
+add r2, r1
+rst r3, r0
 skip_exp_gt_ten:
-ldc 01111
-mov r6, r2
-ldc 00011
-mov r6, r3
-lst r3, r2
-ldc 00111
-mov r6, r3
-add r3, r2
-and r2, r0
 ldc 00000
 mov r4, r2
 cmp r2, r6
@@ -80,6 +100,20 @@ overflow:
 ldc 00001
 mov r6, r2
 add r2, r0
+ldc 00000
+mov r6, r5
+beq finished
+special_case:
+ldc 00001
+mov r6, r0
+ldc 10000
+mov r6, r3
+sub r3, r0
+add r0, r6
+mov r4, r3
+add r3, r0
+mov r6, r1
+add r3, r1
 finished:
 ldc 00111
 str r0
